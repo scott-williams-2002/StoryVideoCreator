@@ -38,10 +38,11 @@ def unique_post(post_id):
                 for line in file:
                     # Append the line to the list (removing newline characters)
                     ids.append(line.strip())
+            file.close() 
             # checks if post_id is in id list if list has non-zero length
             if len(ids) != 0:
                 for id in ids:
-                    if id.lower() == post_id.lower(): # if id used before return false (since checking for unique)
+                    if str(id).lower() == str(post_id).lower(): # if id used before return false (since checking for unique)
                         return False
             return True # if id not found, return true
         
@@ -57,3 +58,21 @@ def unique_post(post_id):
             open(post_id_storage_file_path, 'a').close() #open file in that folder (essentially creating the file)
 
             return True
+        
+#given a post id, loads that id into the file storing previously used post ids
+def update_id_storage_file(id):
+    #file path info
+    storage_folder_name = "storage"
+    storage_file_name = "previous_post_ids.txt"
+    folder_absolute_path = os.path.abspath(storage_folder_name)
+    post_id_storage_file_path = os.path.join(folder_absolute_path, storage_file_name)
+
+    try:
+        with open(post_id_storage_file_path, 'a') as f:
+            complete_addition = str(id) + "\n"
+            f.write(complete_addition)
+        
+        print(f"Appended Post ID {id} to Storage")
+    except:
+        print(f"ERROR Appending Post ID {id} to Storage")
+

@@ -1,3 +1,5 @@
 /env
 .env
 src/reddit/__pycache__/
+src/user_input/__pycache__/
+/storage
